@@ -8,8 +8,7 @@ class Calculator {
 
     //clear display 
     clear () {
-        //new variable to display number button clicked
-        this.currentOperandDisplayed = '';
+        this.currentOperand.innerText = '';
     }
 
     //delete numbers
@@ -19,8 +18,11 @@ class Calculator {
 
     //append numbers to screen
     append(number) {
-        this.currentOperandDisplayed = number;
-        console.log(this.currentOperandDisplayed + '(append number)');
+        //Take button clicked and set it to equal new number variable
+        // this.currentOperandDisplayed = number;
+        // console.log(this.currentOperandDisplayed + '(append number)');
+
+        this.currentOperand.innerText = number;
     }
 
     //choose operation calculations 
@@ -31,12 +33,6 @@ class Calculator {
     //Do calculations when the equal button is pressed
     equals() {
 
-    }
-
-    //update the display 
-    updateDisplay() {
-        this.currentOperand.innerText = this.currentOperandDisplayed;
-        console.log(this.currentOperand.innerText);
     }
 }
 
@@ -51,14 +47,21 @@ const allClearButton = document.querySelector('[data-all-clear]');
 const previousOperand = document.querySelector('[data-previous]');
 const currentOperand = document.querySelector('[data-current]');
 
+
+//Make use of class
 const calculator = new Calculator(previousOperand, currentOperand);
+
 
 //When a number button is pressed, put it on the display 
 numberButtons.forEach(button => {
     button.addEventListener('click', ()=> {
-        console.log(button.innerText + ' was clicked');
-
         calculator.append(button.innerText);
-        calculator.updateDisplay();
     })
 })
+
+
+//Clear all numbers on screen
+allClearButton.addEventListener('click', ()=> {
+    console.log("clear button was clicked");
+    calculator.clear();
+});
