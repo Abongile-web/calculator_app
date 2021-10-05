@@ -13,21 +13,32 @@ class Calculator {
 
     //delete numbers
     delete() {
-
+        this.currentOperand.innerText = this.currentOperand.innerText.slice(0, -1);
+        console.log(this.currentOperand.innerText);
     }
 
     //append numbers to screen
     append(number) {
-        //Take button clicked and set it to equal new number variable
-        // this.currentOperandDisplayed = number;
-        // console.log(this.currentOperandDisplayed + '(append number)');
+        //if number already has "." or if it equals "." then do nothing 
+        if (currentOperand.innerText.includes('.') && number === '.') {
+            return;
+        }
 
-        this.currentOperand.innerText = number;
+        //convert number passed plus current number to string so that they go next to each other (instead of replacing each other) when buttons are pressed 
+        this.currentOperand.innerText = this.currentOperand.innerText.toString() + number.toString();
+
     }
 
     //choose operation calculations 
     chooseOperation(operation) {
+        //if last character of current display equals operation pressed, then do nothing 
+        if (currentOperand.innerText.slice(-1) === operation.innerText) {
+            console.log("operation is already here");
+            return;
+        }
 
+        //Add operation selected to the screen
+        this.currentOperand.innerText = this.currentOperand.innerText.toString() + operation.innerText.toString();
     }
 
     //Do calculations when the equal button is pressed
@@ -62,6 +73,19 @@ numberButtons.forEach(button => {
 
 //Clear all numbers on screen
 allClearButton.addEventListener('click', ()=> {
-    console.log("clear button was clicked");
     calculator.clear();
 });
+
+
+//When an operation button is clicked, put it on display
+operationButtons.forEach(button => {
+    button.addEventListener('click', ()=>{
+        calculator.chooseOperation(button);
+    })
+})
+
+
+//When Delete button is selected, remove a character from previous display 
+deleteButton.addEventListener('click', ()=> {
+    calculator.delete();
+})
