@@ -9,6 +9,7 @@ class Calculator {
     //clear display 
     clear () {
         this.currentOperand.innerText = '';
+        this.previousOperand.innerText = '';
     }
 
     //delete numbers
@@ -19,6 +20,8 @@ class Calculator {
 
     //append numbers to screen
     append(number) {
+        console.log(this.previousOperand.innerText + typeof this.previousOperand.innerText);
+        console.log(this.currentOperand.innerText + typeof this.currentOperand.innerText);
         //if number already has "." or if it equals "." then do nothing 
         if (currentOperand.innerText.includes('.') && number === '.') {
             return;
@@ -31,19 +34,66 @@ class Calculator {
 
     //choose operation calculations 
     chooseOperation(operation) {
-        //if last character of current display equals operation pressed, then do nothing 
-        if (currentOperand.innerText.slice(-1) === operation.innerText) {
-            console.log("operation is already here");
-            return;
+        //if there is already a value in the previous screen, do calculation of number in previous screen and number of current screen 
+        if (this.previousOperand.innerText != '') {
+            //convert them to numbers 
+            let previous = parseFloat(this.previousOperand.innerText);
+            let current = parseFloat(this.currentOperand.innerText);
+            let operationValue = operation.innerText;
+            let answer;
+            
+            //whatever operation is, perform that calculation
+            switch (operationValue) {
+                case '+':
+                    answer = previous + current;
+                    console.log(answer);
+                    //make previous display equal the answer and selected operation 
+                    this.previousOperand.innerText = answer + operationValue;
+                    //clear current display
+                    this.currentOperand.innerText = '';
+                    return;
+                    break;
+                case '-':
+                    answer = previous - current;
+                    console.log(answer);
+                    //make previous display equal the answer and selected operation 
+                    this.previousOperand.innerText = answer + operationValue;
+                    //clear current display
+                    this.currentOperand.innerText = '';
+                    return;
+                    break;
+                case '*':
+                    answer = previous * current;
+                    console.log(answer);
+                    //make previous display equal the answer and selected operation 
+                    this.previousOperand.innerText = answer + operationValue;
+                    //clear current display
+                    this.currentOperand.innerText = '';
+                    return;
+                    break;
+                case '÷':
+                    answer = previous / current;
+                    console.log(answer);
+                    //make previous display equal the answer and selected operation 
+                    this.previousOperand.innerText = answer + operationValue;
+                    //clear current display
+                    this.currentOperand.innerText = '';
+                    return;
+                    break;
+
+            }
         }
 
-        //Add operation selected to the screen
-        this.currentOperand.innerText = this.currentOperand.innerText.toString() + operation.innerText.toString();
+        //Add operation selected to the previous screen
+        this.previousOperand.innerText = this.currentOperand.innerText.toString() + operation.innerText.toString();
+
+        //make current display equals nothing 
+        this.currentOperand.innerText = '';
     }
 
     //Do calculations when the equal button is pressed
     equals() {
-
+        
     }
 }
 
@@ -88,4 +138,10 @@ operationButtons.forEach(button => {
 //When Delete button is selected, remove a character from previous display 
 deleteButton.addEventListener('click', ()=> {
     calculator.delete();
+})
+
+
+//When Equals button is selected, do calculations of current display 
+equalsButton.addEventListener('click', ()=> {
+    calculator.equals();
 })
