@@ -15,13 +15,10 @@ class Calculator {
     //delete numbers
     delete() {
         this.currentOperand.innerText = this.currentOperand.innerText.slice(0, -1);
-        console.log(this.currentOperand.innerText);
     }
 
     //append numbers to screen
     append(number) {
-        console.log(this.previousOperand.innerText + typeof this.previousOperand.innerText);
-        console.log(this.currentOperand.innerText + typeof this.currentOperand.innerText);
         //if number already has "." or if it equals "." then do nothing 
         if (currentOperand.innerText.includes('.') && number === '.') {
             return;
@@ -34,58 +31,17 @@ class Calculator {
 
     //choose operation calculations 
     chooseOperation(operation) {
-        //if there is already a value in the previous screen, do calculation of number in previous screen and number of current screen 
+        //if there is already a value in the previous screen, perform what is in the statement 
         if (this.previousOperand.innerText != '') {
-            //convert them to numbers 
-            let previous = parseFloat(this.previousOperand.innerText);
-            let current = parseFloat(this.currentOperand.innerText);
-            let operationValue = operation.innerText;
-            let answer;
-            
-            //whatever operation is, perform that calculation
-            switch (operationValue) {
-                case '+':
-                    answer = previous + current;
-                    console.log(answer);
-                    //make previous display equal the answer and selected operation 
-                    this.previousOperand.innerText = answer + operationValue;
-                    //clear current display
-                    this.currentOperand.innerText = '';
-                    return;
-                    break;
-                case '-':
-                    answer = previous - current;
-                    console.log(answer);
-                    //make previous display equal the answer and selected operation 
-                    this.previousOperand.innerText = answer + operationValue;
-                    //clear current display
-                    this.currentOperand.innerText = '';
-                    return;
-                    break;
-                case '*':
-                    answer = previous * current;
-                    console.log(answer);
-                    //make previous display equal the answer and selected operation 
-                    this.previousOperand.innerText = answer + operationValue;
-                    //clear current display
-                    this.currentOperand.innerText = '';
-                    return;
-                    break;
-                case '÷':
-                    answer = previous / current;
-                    console.log(answer);
-                    //make previous display equal the answer and selected operation 
-                    this.previousOperand.innerText = answer + operationValue;
-                    //clear current display
-                    this.currentOperand.innerText = '';
-                    return;
-                    break;
-
+            //if the current display is nothing, then do nothing (prevents user from double clicking operation)
+            if (this.currentOperand.innerText == '') {
+                return;
             }
+            
         }
 
         //Add operation selected to the previous screen
-        this.previousOperand.innerText = this.currentOperand.innerText.toString() + operation.innerText.toString();
+        this.previousOperand.innerText = this.previousOperand.innerText + this.currentOperand.innerText.toString() + operation.innerText.toString();
 
         //make current display equals nothing 
         this.currentOperand.innerText = '';
@@ -93,7 +49,16 @@ class Calculator {
 
     //Do calculations when the equal button is pressed
     equals() {
-        
+        //add current display number to previous display 
+        this.previousOperand.innerText = this.previousOperand.innerText + this.currentOperand.innerText.toString();
+
+        //make current display be the result of previous display calculations
+        this.currentOperand.innerText = eval(this.previousOperand.innerText);
+
+        //clear previous display 
+        this.previousOperand.innerText = '';
+
+        console.log(this.previousOperand.innerText);
     }
 }
 
