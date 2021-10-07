@@ -31,13 +31,18 @@ class Calculator {
 
     //choose operation calculations 
     chooseOperation(operation) {
-        //if there is already a value in the previous screen, perform what is in the statement 
         if (this.previousOperand.innerText != '') {
             //if the current display is nothing, then do nothing (prevents user from double clicking operation)
             if (this.currentOperand.innerText == '') {
+            return;
+            }
+        }
+
+        //if there is no value in previous display and the first button the user clicks is a * or /, then do nothing (prevent errors in calculations)
+        if (this.previousOperand.innerText == '' && this.currentOperand.innerText == '') {
+            if (operation.innerText == '*' || operation.innerText == '/') {
                 return;
             }
-            
         }
 
         //Add operation selected to the previous screen

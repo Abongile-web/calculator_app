@@ -6,8 +6,7 @@
 }
 
 body {
-  background: -webkit-gradient(linear, left top, right top, from(#355c7d), to(#6c5b7b));
-  background: linear-gradient(to right, #355c7d, #6c5b7b);
+  background-color: #355c7d;
 }
 
 .calculator {
@@ -18,7 +17,7 @@ body {
           justify-content: center;
   -ms-flex-line-pack: center;
       align-content: center;
-  min-height: 100vh;
+  height: 100vh;
   -ms-grid-columns: (100px)[4];
       grid-template-columns: repeat(4, 100px);
   -ms-grid-rows: minmax(120px, auto) (100px)[5];
@@ -68,5 +67,16 @@ body {
 
 .calculator .output-screen .current {
   font-size: 32px;
+}
+
+@media only screen and (max-width: 767px) {
+  .calculator {
+    height: 100vh;
+    width: 100vw;
+    -ms-grid-columns: (25%)[4];
+        grid-template-columns: repeat(4, 25%);
+    -ms-grid-rows: minmax(120px, auto) (16%)[5];
+        grid-template-rows: minmax(120px, auto) repeat(5, 16%);
+  }
 }
 /*# sourceMappingURL=style.css.map */
